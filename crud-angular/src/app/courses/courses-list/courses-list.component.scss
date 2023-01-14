@@ -1,0 +1,34 @@
+mat-table {
+  overflow: auto;
+  max-height: 600px;
+}
+
+.action-column,
+.mat-header-cell-action-column {
+  justify-content: flex-end;
+}
+
+.icon-add {
+  margin-right: 2rem;
+}
+
+.column-category {
+  justify-content: center;
+}
+
+$small: 380px;
+
+@media screen and (max-width: $small) {
+  .column-category {
+    display: none;
+  }
+  .icon-add {
+    margin: auto;
+  }
+  .mat-header-cell-column-name,
+  .mat-header-cell-action-column,
+  mat-cell,
+  action-column {
+    min-width: 50%;
+  }
+}

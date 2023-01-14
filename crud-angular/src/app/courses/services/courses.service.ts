@@ -11,11 +11,16 @@ export class CoursesService {
 
   constructor(private httpClient: HttpClient) {}
 
+  //Partial: aceita objeto com pelo menos um atributo da interface (parcialmente)
+  postCourse(course: Partial<Course>) {
+    return this.httpClient.post<Course>(this.API, course).pipe(first());
+  }
+
   getCourses() {
     return this.httpClient.get<Course[]>(this.API).pipe(first());
   }
 
-  postCourse(course: Course) {
-   return this.httpClient.post<Course>(this.API, course).pipe(first());
+  getCourseById() {
+    return this.httpClient.get<Course>(this.API).pipe(first());
   }
 }

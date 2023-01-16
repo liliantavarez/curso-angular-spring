@@ -1,10 +1,8 @@
 package com.lilian.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +35,8 @@ public class CoursesController {
     }
 
     @GetMapping("/{id}")
+    //ResponseEntity<Course>: Definindo tipo do retorno
+    //@PathVariable Long id: parâmetro de nome id tipo long sendo enviado no caminho da requisição
     public ResponseEntity<Course> getById(@PathVariable Long id) {
         return courseRepository.findById(id).map(course -> ResponseEntity.ok().body(course))
                 .orElse(ResponseEntity.notFound().build());

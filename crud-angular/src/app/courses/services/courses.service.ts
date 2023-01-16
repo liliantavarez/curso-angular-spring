@@ -21,11 +21,11 @@ export class CoursesService {
     return this.httpClient.get<Course[]>(this.API).pipe(first());
   }
 
-  getCourseById() {
-    return this.httpClient.get<Course>(this.API).pipe(first());
+  getCourseById(id: String) {
+    return this.httpClient.get<Course>(`${this.API}/${id}`).pipe(first());
   }
 
-  deleteCouseById(_id: String) {
-    return this.httpClient.delete<Course>(this.API).pipe(first());
+  deleteCouseById(id: String) {
+    return this.httpClient.delete<Course>(`${this.API}/${id}`).pipe(first());
   }
 }

@@ -10,6 +10,7 @@ import { Course } from '../../model/course';
 export class CoursesListComponent {
   @Input() courses: Course[] = [];
   @Output() add = new EventEmitter(false);
+  @Output() edit = new EventEmitter(false);
   @Output() delete = new EventEmitter(false);
   //readonly: não permite fazer alterações no objeto
   readonly displayedColumns = ['name', 'category', 'actions'];
@@ -20,7 +21,11 @@ export class CoursesListComponent {
     this.add.emit(true);
   }
 
-  onDelete() {
-    this.delete.emit(true);
+  onEdit(course: Course) {
+    this.edit.emit(course);
+  }
+
+  onDelete(course: Course) {
+    this.delete.emit(course);
   }
 }

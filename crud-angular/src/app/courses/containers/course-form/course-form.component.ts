@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NonNullableFormBuilder } from '@angular/forms';
+import { NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
@@ -16,7 +16,14 @@ import { CoursesService } from '../../services/courses.service';
 })
 export class CourseFormComponent implements OnInit {
   //Formulário tipado com campos não nulos
-  form = this.formBuilder.group({ _id: [''], name: [''], category: [''] });
+  form = this.formBuilder.group({
+    _id: [''],
+    name: [
+      '',
+      [Validators.required, Validators.minLength(4), Validators.maxLength(100)],
+    ],
+    category: ['', [Validators.required]],
+  });
   durationInSeconds = 4;
   constructor(
     //Não permite campos nulos no formulário
@@ -61,5 +68,31 @@ export class CourseFormComponent implements OnInit {
     });
     this.form.reset();
     this.onCancel();
+  }
+
+  getErrorMessage(fieldName: string) {
+    const field = this.form.get(fieldName);
+
+    if (field?.hasError('required')) {
+      return 'Campo obrigatório';
+    }
+
+    if (field?.hasError('minlength')) {
+      const requiredLength: number = field.errors
+        ? field.errors['minlength']['requiredLength']
+        : 4;
+
+      return `Tamanho mínimo precisa ser de ${requiredLength} caracteres`;
+    }
+
+    if (field?.hasError('maxlength')) {
+      const requiredLength: number = field.errors
+        ? field.errors['maxlength']['requiredLength']
+        : 100;
+
+      return `Tamanho máximo excedido de ${requiredLength} caracteres`;
+    }
+
+    return 'Campo invalido';
   }
 }

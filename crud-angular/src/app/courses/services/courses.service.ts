@@ -7,6 +7,7 @@ import { first, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class CoursesService {
+  [x: string]: any;
   private readonly API = 'api/courses';
 
   constructor(private httpClient: HttpClient) {}
@@ -22,5 +23,9 @@ export class CoursesService {
 
   getCourseById() {
     return this.httpClient.get<Course>(this.API).pipe(first());
+  }
+
+  deleteCouseById(_id: String) {
+    return this.httpClient.delete<Course>(this.API).pipe(first());
   }
 }

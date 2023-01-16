@@ -48,7 +48,7 @@ export class CourseFormComponent implements OnInit {
   onCancel() {
     this.location.back();
   }
-  
+
   private onErro() {
     this._snackBar.open('Erro ao salvar curso', '', {
       duration: this.durationInSeconds * 1000,
@@ -56,7 +56,7 @@ export class CourseFormComponent implements OnInit {
   }
 
   private onSucess() {
-    this._snackBar.open('Curso salvo!', '', {
+    this._snackBar.open('Curso salvo com sucesso! 😄', '', {
       duration: this.durationInSeconds * 1000,
     });
     this.form.reset();

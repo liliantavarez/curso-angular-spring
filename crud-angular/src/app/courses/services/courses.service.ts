@@ -14,7 +14,10 @@ export class CoursesService {
 
   //Partial: aceita objeto com pelo menos um atributo da interface (parcialmente)
   postCourse(course: Partial<Course>) {
-    return this.httpClient.post<Course>(this.API, course).pipe(first());
+    if (course._id) {
+      return this.update(course);
+    }
+    return this.create(course);
   }
 
   getCourses() {
@@ -27,5 +30,15 @@ export class CoursesService {
 
   deleteCouseById(id: String) {
     return this.httpClient.delete<Course>(`${this.API}/${id}`).pipe(first());
+  }
+
+  private create(course: Partial<Course>) {
+    return this.httpClient.post<Course>(this.API, course).pipe(first());
+  }
+
+  private update(course: Partial<Course>) {
+    return this.httpClient
+      .put<Course>(`${this.API}/${course._id}`, course)
+      .pipe(first());
   }
 }

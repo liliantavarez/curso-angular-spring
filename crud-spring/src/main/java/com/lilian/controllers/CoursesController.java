@@ -40,13 +40,18 @@ public class CoursesController {
     // @PathVariable Long id: parâmetro de nome id tipo long sendo enviado no
     // caminho da requisição
     public ResponseEntity<Course> getById(@PathVariable Long id) {
-        return courseRepository.findById(id).map(course -> ResponseEntity.ok().body(course))
+        return courseRepository.findById(id).map(courseFound -> ResponseEntity.ok().body(courseFound))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        courseRepository.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        return courseRepository.findById(id).map(courseFound -> {
+            courseRepository.deleteById(id);
+            return ResponseEntity.noContent().<Void>build();
+        })
+        //Retorna que o registro não foi encontrado
+        .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
@@ -57,7 +62,7 @@ public class CoursesController {
             Course updated = courseRepository.save(courseFound);
             return ResponseEntity.ok().body(updated);
         })
-        .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping

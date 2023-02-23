@@ -1,4 +1,4 @@
-package com.lilian.controllers;
+package com.spring.controllers;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lilian.model.Course;
-import com.lilian.repository.CourseRepository;
+import com.spring.model.Course;
+import com.spring.repository.CourseRepository;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

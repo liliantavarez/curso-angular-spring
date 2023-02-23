@@ -1,4 +1,4 @@
-package com.lilian.model;
+package com.spring.model;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;

@@ -1,12 +1,12 @@
-package com.lilian;
+package com.spring;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.lilian.model.Course;
-import com.lilian.repository.CourseRepository;
+import com.spring.model.Course;
+import com.spring.repository.CourseRepository;
 
 @SpringBootApplication
 public class CrudSpringApplication {

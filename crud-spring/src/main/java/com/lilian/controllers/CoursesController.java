@@ -1,6 +1,6 @@
 package com.lilian.controllers;
 
-import com.lilian.model.Course;
+import com.lilian.dto.CourseDTO;
 import com.lilian.services.CourseService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -24,7 +24,7 @@ public class CoursesController {
     }
 
     @GetMapping
-    public @ResponseBody List<Course> getAll() {
+    public @ResponseBody List<CourseDTO> getAll() {
         return courseService.getAll();
     }
 
@@ -32,7 +32,7 @@ public class CoursesController {
     // ResponseEntity<Course>: Definindo tipo do retorno
     // @PathVariable Long id: parâmetro de nome id tipo long sendo enviado no
     // caminho da requisição
-    public Course getById(@PathVariable @NotNull @Positive Long id) {
+    public CourseDTO getById(@PathVariable @NotNull @Positive Long id) {
         return courseService.getById(id);
     }
 
@@ -43,14 +43,14 @@ public class CoursesController {
     }
 
     @PutMapping("/{id}")
-    public Course update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Course
+    public CourseDTO update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid @NotNull CourseDTO
             course) {
         return courseService.update(id, course);
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Course post(@RequestBody @Valid Course course) {
+    public CourseDTO post(@RequestBody @Valid @NotNull CourseDTO course) {
         return courseService.post(course);
     }
 }

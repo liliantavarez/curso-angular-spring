@@ -1,5 +1,6 @@
 package com.lilian.services;
 
+import com.lilian.exceptions.RecordNotFoundException;
 import com.lilian.model.Course;
 import com.lilian.repository.CourseRepository;
 import jakarta.validation.Valid;
@@ -10,7 +11,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Optional;
 
 
 //Classe service é uma especialização na anotação de component;
@@ -27,28 +27,27 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public Optional<Course> getById(@PathVariable @NotNull @Positive Long id) {
-        return courseRepository.findById(id);
+    public Course getById(@PathVariable @NotNull @Positive Long id) {
+        return courseRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
     public Course post(@Valid Course course) {
         return courseRepository.save(course);
     }
 
-    public Optional<Course> update(@NotNull @Positive Long id, @Valid Course course) {
+    public Course update(@NotNull @Positive Long id, @Valid Course course) {
         return courseRepository.findById(id).map(courseFound -> {
             courseFound.setName(course.getName());
             courseFound.setCategory(course.getCategory());
             return courseRepository.save(courseFound);
-        });
+        }).orElseThrow(() -> new RecordNotFoundException(id));
+
     }
 
-    public boolean delete(@PathVariable @NotNull @Positive Long id) {
-        return courseRepository.findById(id).map(courseFound -> {
-                    courseRepository.deleteById(id);
-                    return true;
-                })
-                // Retorna que o registro não foi encontrado
-                .orElse(false);
+    public void delete(@PathVariable @NotNull @Positive Long id) {
+        courseRepository.delete(courseRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(id)));
+
+
     }
 }

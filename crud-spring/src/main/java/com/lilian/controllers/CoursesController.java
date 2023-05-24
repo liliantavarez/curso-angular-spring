@@ -6,7 +6,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,25 +32,20 @@ public class CoursesController {
     // ResponseEntity<Course>: Definindo tipo do retorno
     // @PathVariable Long id: parâmetro de nome id tipo long sendo enviado no
     // caminho da requisição
-    public ResponseEntity<Course> getById(@PathVariable @NotNull @Positive Long id) {
-        return courseService.getById(id).map(courseFound -> ResponseEntity.ok().body(courseFound))
-                .orElse(ResponseEntity.notFound().build());
+    public Course getById(@PathVariable @NotNull @Positive Long id) {
+        return courseService.getById(id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable @NotNull @Positive Long id) {
-        if (courseService.delete(id)) {
-            return ResponseEntity.noContent().<Void>build();
-        }
-        // Retorna que o registro não foi encontrado
-        return ResponseEntity.notFound().build();
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable @NotNull @Positive Long id) {
+        courseService.delete(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Course course) {
-        return courseService.update(id, course)
-                .map(courseFound -> ResponseEntity.ok().body(courseFound))
-                .orElse(ResponseEntity.notFound().build());
+    public Course update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Course
+            course) {
+        return courseService.update(id, course);
     }
 
     @PostMapping

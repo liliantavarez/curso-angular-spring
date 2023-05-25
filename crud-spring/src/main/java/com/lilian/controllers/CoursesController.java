@@ -24,7 +24,7 @@ public class CoursesController {
     }
 
     @GetMapping
-    public @ResponseBody List<CourseDTO> getAll() {
+    public List<CourseDTO> getAll() {
         return courseService.getAll();
     }
 

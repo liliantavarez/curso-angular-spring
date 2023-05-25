@@ -1,20 +1,17 @@
 package com.lilian.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.lilian.enums.Category;
+import com.lilian.enums.Status;
+import com.lilian.enums.converters.CategoryConverter;
+import com.lilian.enums.converters.StatusConverter;
+import jakarta.annotation.Nonnull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import jakarta.annotation.Nonnull;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import lombok.Data;
 
 @Data
 @Entity
@@ -37,15 +34,13 @@ public class Course {
     private String name;
 
     @Nonnull
-    @Length(max = 10)
-    @Pattern(regexp = "back-end|front-end")
     @Column(length = 20, nullable = false)
-    private String category;
+    @Convert(converter = CategoryConverter.class)
+    private Category category;
 
     @Nonnull
-    @Length(max = 10)
-    @Pattern(regexp = "Ativo|Inativo")
     @Column(length = 10, nullable = false)
-    private String status = "Ativo";
+    @Convert(converter = StatusConverter.class)
+    private Status status = Status.ACTIVE;
 
 }

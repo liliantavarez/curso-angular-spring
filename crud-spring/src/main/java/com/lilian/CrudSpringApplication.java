@@ -1,5 +1,6 @@
 package com.lilian;
 
+import com.lilian.enums.Category;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,13 +23,13 @@ public class CrudSpringApplication {
 
 			Course c = new Course();
 			c.setName("Angular");
-			c.setCategory("front-end");
+			c.setCategory(Category.FRONT_END);
 
 			courseRepository.save(c);
 
 			Course c2 = new Course();
 			c2.setName("Spring");
-			c2.setCategory("back-end");
+			c2.setCategory(Category.BACK_END);
 
 			courseRepository.save(c2);
 		};

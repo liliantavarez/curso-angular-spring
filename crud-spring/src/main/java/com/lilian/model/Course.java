@@ -13,6 +13,9 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 // Recebe uma string com o sql que sera executado pelo deleted via  hibernate
@@ -42,5 +45,9 @@ public class Course {
     @Column(length = 10, nullable = false)
     @Convert(converter = StatusConverter.class)
     private Status status = Status.ACTIVE;
+
+    //Sempre que for feita qualquer mudança na entidade course sera verificado se essas mudanças serão passadas para entidade lessons
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
+    private List<Lesson> lessons = new ArrayList<>();
 
 }
